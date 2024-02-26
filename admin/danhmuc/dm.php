@@ -1,10 +1,8 @@
 <div class="box_right_1">
-    <h2>Quản lý Danh mục</h2>
+    <h2>Quản lý tài khoản</h2>
 </div>
 <hr>
-<div class="dm_a">
-    <a href="index.php?act=themdanhmuc">+</a>
-</div>
+<a class="dm_a" href="index.php?act=themdanhmuc">+</a>
 <div class="box_right_dm">
     <table border="1px">
         <tr>
@@ -14,15 +12,16 @@
         </tr>
         <?php foreach ($hienthi_dm as $k => $v) {
             extract($v);
-             ?>
-        <tr>
-            <td><?php echo $id_dm ?></td>
-            <td><?php echo $ten_dm ?></td>
-            <td class="box_right_link">
-                <a href="">Sửa</a>
-                <a href="">Xóa</a>
-            </td>
-        </tr>
+            $stt = $k + 1;
+        ?>
+            <tr>
+                <td><?php echo $stt; ?></td>
+                <td><?php echo $ten_dm; ?></td>
+                <td class="box_right_link">
+                    <a href="index.php?act=suadm&iddm=<?php echo $id_dm ?>">Sửa</a>
+                    <a href="index.php?act=xoadm&iddm=<?php echo $id_dm ?>" onclick="return confirm('bạn có muốn xóa không ? lưu ý xóa sẽ xóa cả sản phẩm cùng danh mục') ">Xóa</a>
+                </td>
+            </tr>
         <?php } ?>
     </table>
 </div>

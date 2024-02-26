@@ -1,33 +1,41 @@
+<?php
+?>
 <main>
     <div class="ctsp">
         <div class="ctsp_link">
-            <a href="">MTK Mobile</a>
-            <a href="">> Điện thoại iphone</a>
-            <p>> Điện thoại iphone 11 64GB Like New</p>
+            <?php foreach ($hienthi_1sp as $k => $v) {
+                extract($v);
+                if ($giamgia != 0) {
+                    $da_giamgia = $gia * ($giamgia / 100);
+                    $giathuc = $gia - $da_giamgia;
+                } else {
+                    $giathuc = $gia;
+                }
+            ?>
+                <a href="index.php?act=trangchu">MTK Mobile</a>
+                <a href="index.php?act=danhmucsp&iddm=<?php echo $id_dm; ?>&tt=new&trang=1">> <?php echo $ten_dm ?></a>
+                <p>> <?php echo $ten_sp ?></p>
         </div>
         <div class="ctsp_product_box">
             <div>
                 <div class="ctsp_product_box1">
                     <div class="ctsp_product_box1_img1">
-                        <img src="./img/sp1.jpg" alt="">
-                    </div>
-                    <div class="ctsp_product_box1_img2">
-                        <img src="./img/sp2.jpg" alt="">
-                        <img src="./img/sp2.jpg" alt="">
-                        <img src="./img/sp2.jpg" alt="">
+                        <img src="./img/<?php echo $img ?>" alt="">
                     </div>
                 </div>
                 <div class="ctsp_product_box2">
-                    <h2>Điện thoại iphone 11 64GB Like New</h2>
                     <div>
-                        <p class="ctsp_product_box2_1">30 bình luận</p>
-                        <p class="ctsp_product_box2_2">20 đã bán</p>
-                    </div>
-                    <div class="ctsp_product_box2_price">
-                        <p>2.000.000đ</p>
-                        <h2>2.000.000đ</h2>
-                        <div class="ctsp_product_box2_price_1">
-                            <p>Giảm 0%</p>
+                        <h2><?php echo $ten_sp ?></h2>
+                        <div>
+                            <p class="ctsp_product_box2_1"><?php echo $luottruycap ?> Lượt xem</p>
+                            <p class="ctsp_product_box2_2"><?php echo $da_ban ?> đã bán</p>
+                        </div>
+                        <div class="ctsp_product_box2_price">
+                            <p><?php echo number_format($gia, 0, '.', '.'); ?>đ</p>
+                            <h2><?php echo number_format($giathuc, 0, '.', '.'); ?>đ</h2>
+                            <div class="ctsp_product_box2_price_1">
+                                <p>Giảm <?php echo $giamgia ?>%</p>
+                            </div>
                         </div>
                     </div>
                     <div class="ctsp_product_box2_property">
@@ -36,23 +44,26 @@
                             <h3>Miễn phí vận chuyển</h3>
                         </div>
                         <div class="ctsp_product_box2_property_2">
-                            <form action="" method="get">
-                            <div class="ctsp_product_form_1">
-                                <h2>Màu sắc :</h2>
-                                <button type="button" name="mausac" value="trang" class="ctsp_product_box2_property_mausac">Trắng</button>
-                                <button type="button" name="mausac" value="den" class="ctsp_product_box2_property_mausac">Đen</button>
-                            </div>
-                            <div class="ctsp_product_form_2">
-                                <h2>Số lượng :</h2>
-                                <button type="button" class="tru" onclick="hanhdongtru()">-</button>
-                                <input type="text" name="soluong" id="soluong" value="1" readonly>
-                                <button type="button" class="cong" onclick="hanhdongcong()">+</button>
-                                <h5>Kho : 22 sản phẩm</h5>
-                            </div>
-                            <div class="ctsp_product_form_3">
-                                <input type="submit" value="Thêm vào giỏ">
-                                <input type="submit" value="Mua ngay">
-                            </div>
+                            <form action="index.php?act=dathang" method="post">
+                                <div class="ctsp_product_form_1">
+                                </div>
+                                <div class="ctsp_product_form_2">
+                                    <input type="hidden" name="giasp" value="<?php echo $giathuc ?>">
+                                    <input type="hidden" name="id" value="<?php echo $id_sp ?>">
+                                    <h2>Số lượng :</h2>
+                                    <button type="button" class="tru" onclick="hanhdongtru()">-</button>
+                                    <input type="text" name="soluong" id="soluong" value="1" readonly>
+                                    <button type="button" class="cong" onclick="hanhdongcong()">+</button>
+                                    <h5>Kho : <?php echo $soluong ?> sản phẩm</h5>
+                                </div>
+                                <div class="ctsp_product_form_3">
+                                <?php if(isset($_SESSION['id_tk'])){ ?>
+                                    <input type="button" value="Thêm vào giỏ" onclick="addtocart(<?php echo $id_sp ?>,'<?php echo $ten_sp ?>',<?php echo $gia ?>)">
+                                    <input type="submit" value="Mua ngay" name="dathang">
+                                <?php }else{ ?>
+                                    <h1 style="color:red">Bạn chưa thể mua hàng và đặt hàng khi chưa đăng nhập</h1>
+                                <?php } ?>
+                                </div>
                             </form>
                         </div>
                     </div>
@@ -62,78 +73,67 @@
         <div class="ctsp_deltail">
             <h2>MÔ TẢ SẢN PHẨM</h2>
             <div class="ctsp_deltail_1">
-                <p> 99% là sản phẩm đúng như ảnh 1% là do khách hàng quá đẹp trai, hihi.
-                    Dịch vụ: Hỗ trợ đổi hàng nếu các bạn đi không vừa.
-                    Thời gian chuẩn bị hàng: hàng luôn có sẵn nên cứ đặt là sẽ đóng gói gửi bạn ạ</p>
+                <p><?php echo $mota ?></p>
             </div>
         </div>
-        <div class="ctsp_comment">
-            <section class="ctsp_comment_1">
+        <div class="ctsp_comments">
+            <section class="ctsp_comments_1">
                 <h2>Bình luận</h2>
-                <form action="" method="post">
-                    <input class="ctsp_comment_1_1" type="text" name="" id="">
-                    <input class="ctsp_comment_1_2" type="submit" value="Gửi">
+                <form action="index.php?act=chitietsp&iddm=<?php echo $id_dm ?>&idsp=<?php echo $id_sp ?>" method="post">
+                <?php } ?>
+                <input class="ctsp_comments_1_1" type="text" name="binhluan" id="">
+                <input type="hidden" name="ngaygui" value="<?php echo $ngaygui ?>">
+                <input class="ctsp_comments_1_2" type="submit" name="gui" value="Gửi">
                 </form>
             </section>
-            <div>
-                <div>
-                    <h5>Tên Người dùng</h5>
-                    <h5>(2023-12-12)</h5>
+            <div class="ctsp_comments_2">
+                <?php
+                $k = 0;
+                foreach ($hienthi_bl as $k => $v) {
+                    extract($v);
+                    $k = $id_bl; ?>
+                    <div class="ctsp_comments_3">
+                        <div class="ctsp_comments_2_1">
+                            <h5><i class="fa-solid fa-user-secret"></i> <?php echo $tennguoidung ?></h5>
+                            <h5>(<?php echo $ngay_bl ?>)</h5>
+                        </div>
+                        <p><?php echo $noidung_bl ?></p>
+                    </div>
+                <?php } ?>
+                <div class="ctsp_comments_3">
+                    <?php if ($k == 0) { ?>
+                        <h1 style="color: red;">Sản phẩm chưa có bình luận</h1>
+                    <?php  } ?>
                 </div>
-                <p>Sản phẩm đẹp quá</p>
-            </div>
-            <div>
-                <div>
-                    <h5>Tên Người dùng</h5>
-                    <h5>(2023-12-12)</h5>
-                </div>
-                <p>Sản phẩm đẹp quá</p>
-            </div>
-            <div>
-                <div>
-                    <h5>Tên Người dùng</h5>
-                    <h5>(2023-12-12)</h5>
-                </div>
-                <p>Sản phẩm đẹp quá</p>
             </div>
         </div>
         <div class="ctsp_same">
             <h2>Các sản phẩm khác cùng loại</h2>
-            <div class="ctsp_same_product">
-                <div class="trangchu_main_box4_product_1">
-                    <img src="./img/sp2.jpg" alt="">
-                    <p>Điện thoại</p>
-                    <h3>1000000đ</h3>
-                    <h5>đã bán 20</h5>
-                </div>
-                <div class="trangchu_main_box4_product_1">
-                    <img src="./img/sp2.jpg" alt="">
-                    <p>Điện thoại</p>
-                    <h3>1000000đ</h3>
-                    <h5>đã bán 20</h5>
-                </div>
-                <div class="trangchu_main_box4_product_1">
-                    <img src="./img/sp2.jpg" alt="">
-                    <p>Điện thoại</p>
-                    <h3>1000000đ</h3>
-                    <h5>đã bán 20</h5>
-                </div>
-                <div class="trangchu_main_box4_product_1">
-                    <img src="./img/sp2.jpg" alt="">
-                    <p>Điện thoại</p>
-                    <h3>1000000đ</h3>
-                    <h5>đã bán 20</h5>
-                </div>
-                <div class="trangchu_main_box4_product_1">
-                    <img src="./img/sp2.jpg" alt="">
-                    <p>Điện thoại</p>
-                    <h3>1000000đ</h3>
-                    <h5>đã bán 20</h5>
-                </div>
+            <div class="trangchu_main_box4_product">
+                <?php foreach ($hienthi_5sp as $k => $v) {
+                    extract($v);
+                    if ($giamgia != 0) {
+                        $da_giamgia = $gia * ($giamgia / 100);
+                        $giathuc = $gia - $da_giamgia;
+                    } else {
+                        $giathuc = $gia;
+                    }
+                ?>
+                    <div class="trangchu_main_box3_product_1">
+                        <div class="trangchu_main_box3_product_1_img">
+                            <a href="index.php?act=chitietsp&iddm=<?php echo $id_dm ?>&idsp=<?php echo $id_sp ?>"><img src="./img/<?php echo $img; ?>" alt=""></a>
+                            <h1>Giảm <?php echo $giamgia; ?>%</h1>
+                        </div>
+                        <p><?php echo $ten_sp; ?></p>
+                        <h3><?php echo number_format($giathuc, 0, '.', '.'); ?>đ</h3>
+                        <h4>đã bán <?php echo $da_ban; ?></h4>
+                    </div>
+                <?php } ?>
             </div>
         </div>
     </div>
 </main>
+<script src="https://code.jquery.com/jquery-3.7.1.min.js"></script>
 <script>
     let laysoluong = document.getElementById("soluong");
 
@@ -155,5 +155,27 @@
         }
         // Hiển thị giá trị mới của soluong
         hienthi();
+    }
+</script>
+<script>
+    let soluong = document.getElementById('soluong1');
+
+    function addtocart(idsp, namesp, pricesp) {
+        $.ajax({
+            type: 'POST',
+            url: "./view/addtocart.php",
+            data: {
+                id: idsp,
+                name: namesp,
+                price: pricesp
+            },
+            success: function(response) {
+                soluong.innerText = response;
+                alert("Bạn đã thêm vào giỏ hàng thành công!");
+            },
+            error: function(error) {
+                console.log(error);
+            }
+        });
     }
 </script>
